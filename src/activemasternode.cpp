@@ -137,17 +137,10 @@ void CActiveMasternode::ManageStateInitial(CConnman& connman)
         LogPrintf("CActiveMasternode::ManageStateInitial -- %s: %s\n", GetStateString(), strNotCapableReason);
         return;
     }
-    
-    if (sporkManager.IsSporkActive(SPORK_15_MASTERNODE_LOCK_NUMBER) && model->getMasternodeCountString() < 2000{
-        nState = ACTIVE_MASTERNODE_NOT_CAPABLE;
-        strNotCapableReason = "Masternode limit reached, only 2000 masternodes allowed";
-        LogPrintf("CActiveMasternode::ManageStateInitial -- %s: %s\n", GetStateString(), strNotCapableReason);
-        return;     
-    }
 
     // First try to find whatever local address is specified by externalip option
     bool fFoundLocal = GetLocal(service) && CMasternode::IsValidNetAddr(service);
-    if(!fFoundLocal) ∑
+    if(!fFoundLocal) {
         bool empty = true;
         // If we have some peers, let's try to find our local address from one of them
         connman.ForEachNodeContinueIf(CConnman::AllNodes, [&fFoundLocal, &empty, this](CNode* pnode) {
